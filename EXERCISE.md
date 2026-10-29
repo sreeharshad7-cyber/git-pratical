@@ -1,39 +1,27 @@
 # Exercise: Identify and Resolve a Merge Conflict
 
 ## Aim
-Create a merge conflict by changing the same line on two branches, identify it, resolve it, and commit the resolution.
+Identify and resolve a merge conflict caused by two branches changing the same line in `message.txt`.
 
-## Commands
+## 1. Get the existing branches
 
 ```bash
 git clone https://github.com/sreeharshad7-cyber/git-pratical.git
 cd git-pratical
-
-git switch -c feature-one
-printf "Welcome to Git Practical\nMessage from Feature One\n" > message.txt
-git add message.txt
-git commit -m "Change message in feature one"
-git push -u origin feature-one
-
-git switch main
-git switch -c feature-two
-printf "Welcome to Git Practical\nMessage from Feature Two\n" > message.txt
-git add message.txt
-git commit -m "Change message in feature two"
-git push -u origin feature-two
-
-# Switch to feature-one and merge feature-two
+git fetch origin
+git switch --track origin/feature-one
+git switch --track origin/feature-two
 git switch feature-one
-git merge feature-two
 ```
 
-## Identify the conflict
+## 2. Trigger and identify the conflict
 
 ```bash
+git merge feature-two
 git status
 ```
 
-The conflicting file is `message.txt`. Git inserts conflict markers similar to:
+Git reports a conflict in `message.txt`. The conflict markers look like this:
 
 ```text
 <<<<<<< HEAD
@@ -43,9 +31,11 @@ Message from Feature Two
 >>>>>>> feature-two
 ```
 
-## Resolve
+`HEAD` is the current `feature-one` branch; the other section comes from `feature-two`.
 
-Edit `message.txt` so it contains both messages:
+## 3. Resolve the conflict
+
+Edit `message.txt` and remove the conflict markers. Keep both messages:
 
 ```text
 Welcome to Git Practical
@@ -53,7 +43,7 @@ Message from Feature One
 Message from Feature Two
 ```
 
-Then finish the merge:
+Then stage, commit, and push the resolution:
 
 ```bash
 git add message.txt
@@ -62,7 +52,7 @@ git push origin feature-one
 ```
 
 ## Expected result
-The merge completes successfully and `message.txt` contains both feature messages. The conflict is resolved by manually choosing the final combined content.
+The merge finishes successfully and the file contains both feature messages. The conflict is resolved by choosing the final combined content rather than blindly discarding either branch's change.
 
-## Note
-This repository contains two branches with conflicting edits to the same line. The merge itself must be performed in Git (locally or through a compatible merge UI) so Git can present and resolve the conflict.
+## Pull request
+The open pull request from `feature-two` into `feature-one` intentionally contains these competing edits. Resolve the conflict locally as described above, push `feature-one`, and then review the pull request.
