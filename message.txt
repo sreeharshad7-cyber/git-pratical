@@ -1,2 +1,2 @@
 Welcome to Git Practical
-Original message
+Message from Feature Two
