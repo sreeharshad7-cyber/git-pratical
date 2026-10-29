@@ -1,2 +1,6 @@
 Welcome to Git Practical
+<<<<<<< HEAD
 Message from Feature One
+=======
+Message from Feature Two
+>>>>>>> origin/feature-two
